@@ -1,21 +1,21 @@
 language: c
 
 git:
-    depth: false
+  depth: false
 
 compiler:
-    - gcc
+  - gcc
 
 services:
-    - docker
+  - docker
 
 before_install:
-    - docker pull epitechcontent/epitest-docker
+  - docker pull epitechcontent/epitest-docker
 
 stages:
-   - build
-   - test
-   - deploy
+  - build
+  - test
+  - deploy
 
 notifications:
   email:
@@ -24,19 +24,19 @@ notifications:
 
 jobs:
   include:
-      - stage: build
-        name: "Build"
-        script:
-          - docker run -v `pwd`:/project epitechcontent/epitest-docker bash -c "cd project && make re"
+    - stage: build
+      name: "Build"
+      script:
+        - docker run -v $PWD:/project epitechcontent/epitest-docker bash -c "cd project && make re"
 
-      - stage: test
-        name: "Test"
-          script:
-            - docker run -v `pwd`:/project epitechcontent/epitest-docker bash -c "cd project && make tests_run"
+    - stage: test
+      name: "Test"
+      script:
+        - docker run -v $PWD:/project epitechcontent/epitest-docker bash -c "cd project && make tests_run"
 
-      - stage: deploy
-        name: "Deployement Epitech Repo"
-        if: branch IN (master, travis) AND type != cron AND type != pull_request
+    - stage: deploy
+      name: "Deployement Epitech Repo"
+      if: branch IN (master, travis) AND type != cron AND type != pull_request
         before_script:
           - ssh-keyscan git.epitech.eu >> ~/.ssh/known_hosts
           - git checkout $TRAVIS_BRANCH
