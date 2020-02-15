@@ -9,8 +9,12 @@ compiler:
 services:
     - docker
 
+before_install:
+    - docker pull epitechcontent/epitest-docker
+
 stages:
    - build
+   - test
    - deploy
 
 notifications:
@@ -22,10 +26,13 @@ jobs:
   include:
       - stage: build
         name: "Build"
-        install:
-          - docker pull epitechcontent/epitest-docker
         script:
-          - docker run -v $(PWD):/project epitechcontent/epitest-docker bash -c "cd project && make re"
+          - docker run -v `pwd`:/project epitechcontent/epitest-docker bash -c "cd project && make re"
+
+      - stage: test
+        name: "Test"
+          script:
+            - docker run -v `pwd`:/project epitechcontent/epitest-docker bash -c "cd project && make tests_run"
 
       - stage: deploy
         name: "Deployement Epitech Repo"
@@ -35,6 +42,3 @@ jobs:
           - git checkout $TRAVIS_BRANCH
         script:
           - git push --repo=git@git.epitech.eu:/joseph.vidal@epitech.eu/ASM_minilibc_2019 --force
-
-script:
-  - make tests_run
