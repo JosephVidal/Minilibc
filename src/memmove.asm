@@ -7,9 +7,9 @@
 
 BITS 64
 
+GLOBAL	memmove:function
 SECTION	.text
 
-GLOBAL	memmove
 
 memmove:	; void *memmove(void *, const void *, size_t);
 	push		rbp
@@ -25,8 +25,14 @@ loop_memmove:
 	cmp			rcx, rdx
 	je			end_memmove
 	mov			[rdi + rcx], r9b
-	inc			rcx
+	cmp         rcx, rdx
+    je          reset
+    inc			rcx
 	jmp			loop_memmove
+
+reset:
+    xor         rcx, rcx
+    jmp         loop_memmove
 
 end_memmove:
 	mov			rax, rdi
