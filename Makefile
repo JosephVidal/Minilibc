@@ -7,14 +7,13 @@
 
 .PHONY: test
 
-SRC			=	src/memcpy.asm	\
-				src/memmove.asm	\
-				src/memset.asm	\
-				src/strchr.asm	\
-				src/strcmp.asm	\
-				src/strlen.asm	\
-				src/strncmp.asm	\
-				src/strstr.asm	\
+SRC			=	src/memcpy.asm		\
+				src/memset.asm		\
+				src/strchr.asm		\
+				src/strcmp.asm		\
+				src/strlen.asm		\
+				src/strncmp.asm		\
+				src/strstr.asm		\
 
 CC			=	gcc
 
