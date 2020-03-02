@@ -32,6 +32,3 @@ jobs:
       name: "Test"
       script:
         - docker run -v $PWD:/project epitechcontent/epitest-docker bash -c "cd project && make tests_run"
-
-      script:
-        - git push --repo=git@git.epitech.eu:/joseph.vidal@epitech.eu/ASM_minilibc_2019 --force
